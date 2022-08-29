@@ -5,17 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
+    <style>
+        #toggler.toggled{
+left: 205px;
+        }
+    </style>
     <!-- == Custom CSS == -->
     <link rel="stylesheet" href="dist/output.css" />
+    <!-- == Required chart.js == -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- == Custom JS == -->
     <script defer type="module" src="scripts/main.js"></script>
   </head>
   <body>
-    <main class="flex h-screen">
+    <main class="flex">
       <!-- == Sidebar Start == -->
 
+      <!-- == Start Toggler == -->
+        <div id="toggler" class=" fixed top-16 bg-pink-800 dark:bg-pink-200 shadow-lg cursor-pointer z-50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white dark:text-gray-700" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+            </svg>
+        </div>
+      <!-- == End Toggler == -->
+
       <section
-        class="sidebar flex flex-col justify-between bg-slate-100 dark:bg-slate-700 basis-1/4 p-4"
+      id="sidebar"
+        class="sidebar fixed top-0 z-10 left-[-100%] min-h-screen flex flex-col justify-between bg-slate-100 dark:bg-slate-700 basis-1/4 p-4 "
       >
         <div class="top-sidebar">
           <div
@@ -91,8 +107,8 @@
             </li>
           </ul>
         </div>
-        <div class="bottom-sidebar flex flex-col h-1/4 justify-between">
-          <ul class="switcher flex gap-x-2 items-center">
+        <div class="bottom-sidebar">
+          <ul class="switcher">
             <li class="moon hidden dark:block">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +141,7 @@
             </li>
           </ul>
 
-          <div class="button basis-1">
+          <div class="button mt-20">
             <button
               class="rounded bg-pink-800 hover:bg-pink-900 dark:bg-pink-200 dark:hover:bg-pink-300 text-white dark:text-gray-700 w-full py-2"
             >
@@ -139,7 +155,7 @@
 
       <!-- == Start Dashboard Body == -->
       <section
-        class="dashboard-body basis-full px-2 py-4 flex flex-col gap-y-16"
+        class="dashboard-body basis-full px-2 py-4 flex flex-col gap-y-8 absolute  w-full"
       >
         <div class="dashboard-top">
           <h3 class="font-bold text-3xl text-slate-600">Dashboard</h3>
@@ -216,9 +232,96 @@
               </div>
             </div>
           </div>
+        <div class="dash-chart mt-5 grid md:grid-cols-3 p-4 gap-3">
+
+                <div class="md:col-span-2 flex flex-col p-8 bg-white dark:bg-slate-700 rounded shadow-sm">
+                  <b class="flex flex-row text-slate-400">Property Release for today</b>
+                  <canvas class="p-5" id="chartLine"></canvas>
+                </div>
+    
+                <div class=" flex flex-col p-5 bg-white dark:bg-slate-700 rounded shadow-sm">
+                  <b class="flex flex-row text-slate-400">Occupancy Percentage</b>
+                  <canvas class="p-5" id="chartRadar"></canvas>
+                </div>
         </div>
       </section>
       <!-- == End Dashboard Body == -->
     </main>
+
+    <!-- Chart line -->
+    <script>
+      const labels = ["January", "February", "March", "April", "May", "June"];
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: "My First dataset",
+            backgroundColor: "hsl(252, 82.9%, 67.8%)",
+            borderColor: "hsl(252, 82.9%, 67.8%)",
+            data: [0, 10, 5, 2, 20, 30, 45],
+          },
+        ],
+      };
+
+      const configLineChart = {
+        type: "line",
+        data,
+        options: {},
+      };
+
+      var chartLine = new Chart(
+        document.getElementById("chartLine"),
+        configLineChart
+      );
+    </script>
+
+    <script>
+      const dataRadar = {
+        labels: [
+          "Reservation 1",
+          "Reservation 2",
+          "Reservation 3",
+          "Reservation 4",
+          "Reservation 5",
+          "Reservation 6",
+          "Reservation 7",
+        ],
+        datasets: [
+          {
+            label: "My First Dataset",
+            data: [65, 59, 90, 81, 56, 55, 40],
+            fill: true,
+            backgroundColor: "rgba(255,105,180)",
+            borderColor: "rgb(255,20,147)",
+            pointBackgroundColor: "rgb(133, 105, 241)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(133, 105, 241)",
+          },
+          {
+            label: "My Second Dataset",
+            data: [28, 48, 40, 19, 96, 27, 100],
+            fill: true,
+            backgroundColor: "rgba(255,105,180)",
+            borderColor: "rgb(0,191,255)",
+            pointBackgroundColor: "rgb(54, 162, 235)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(54, 162, 235)",
+          },
+        ],
+      };
+
+      const configRadarChart = {
+        type: "radar",
+        data: dataRadar,
+        options: {},
+      };
+
+      var chartBar = new Chart(
+        document.getElementById("chartRadar"),
+        configRadarChart
+      );
+    </script>
   </body>
 </html>
