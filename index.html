@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
     <style>
-      #toggler.toggled {
-        left: 205px;
+      .show {
+        left: 0 !important;
       }
     </style>
     <!-- == Custom CSS == -->
@@ -17,14 +17,20 @@
     <!-- == Custom JS == -->
     <script defer type="module" src="scripts/main.js"></script>
   </head>
-  <body>
+  <body class="selection:text-pink-800 dark:selection:text-pink-200">
     <main class="flex">
       <!-- == Sidebar Start == -->
 
-      <!-- == Start Toggler == -->
+      <!-- == Start Modal == -->
       <div
+        class="modal fixed top-0 left-0 w-screen transition-all duration-200 bg-black opacity-0 z-40"
+      ></div>
+      <!-- == Start Modal == -->
+
+      <!-- == Start Toggler == -->
+      <button
         id="toggler"
-        class="fixed top-16 bg-pink-800 dark:bg-pink-200 shadow-lg cursor-pointer z-50"
+        class="fixed bottom-12 right-16 bg-pink-800 active:bg-pink-900 dark:bg-pink-200 shadow-lg cursor-pointer z-50 peer rounded-full w-12 h-12 flex items-center justify-center"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,12 +44,12 @@
             clip-rule="evenodd"
           />
         </svg>
-      </div>
+      </button>
       <!-- == End Toggler == -->
 
       <section
         id="sidebar"
-        class="sidebar fixed top-0 z-10 left-[-100%] min-h-screen flex flex-col justify-between bg-slate-100 dark:bg-slate-700 basis-1/4 p-4"
+        class="sidebar fixed top-0 z-50 -left-full min-h-screen flex flex-col justify-between bg-slate-100 dark:bg-slate-700 basis-1/4 p-4 transition-all duration-300 shadow-2xl"
       >
         <div class="top-sidebar">
           <div
@@ -246,19 +252,23 @@
           </div>
           <div class="dash-chart mt-5 grid md:grid-cols-3 p-4 gap-3">
             <div
-              class="md:col-span-2 flex flex-col p-8 bg-white dark:bg-slate-700 rounded shadow-sm"
+              class="md:col-span-2 flex flex-col p-2 md:p-8 bg-white dark:bg-slate-700 rounded shadow-sm max-w-[90%] md:max-w-full w-full mx-auto"
             >
               <b class="flex flex-row text-slate-400"
                 >Property Release for today</b
               >
-              <canvas class="p-5" id="chartLine"></canvas>
+              <div class="chartline-container w-full h-full">
+                <canvas id="chartLine"></canvas>
+              </div>
             </div>
 
             <div
-              class="flex flex-col p-5 bg-white dark:bg-slate-700 rounded shadow-sm"
+              class="flex flex-col p-2 md:p-8 bg-white dark:bg-slate-700 rounded shadow-sm max-w-[90%] md:max-w-full w-full mx-auto"
             >
               <b class="flex flex-row text-slate-400">Occupancy Percentage</b>
-              <canvas class="p-5" id="chartRadar"></canvas>
+              <div class="chartline-container w-full">
+                <canvas id="chartRadar"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -274,7 +284,7 @@
         labels: labels,
         datasets: [
           {
-            label: "My First dataset",
+            label: "Check-In Users",
             backgroundColor: "hsl(252, 82.9%, 67.8%)",
             borderColor: "hsl(252, 82.9%, 67.8%)",
             data: [0, 10, 5, 2, 20, 30, 45],
@@ -285,7 +295,7 @@
       const configLineChart = {
         type: "line",
         data,
-        options: {},
+        options: { maintainAspectRatio: false },
       };
 
       var chartLine = new Chart(
@@ -308,7 +318,7 @@
         ],
         datasets: [
           {
-            label: "My First Dataset",
+            label: "Assets",
             data: [65, 59, 90, 81, 56, 55, 40],
             fill: true,
             backgroundColor: "rgba(255,105,180)",
@@ -319,7 +329,7 @@
             pointHoverBorderColor: "rgb(133, 105, 241)",
           },
           {
-            label: "My Second Dataset",
+            label: "Price",
             data: [28, 48, 40, 19, 96, 27, 100],
             fill: true,
             backgroundColor: "rgba(255,105,180)",
@@ -335,7 +345,7 @@
       const configRadarChart = {
         type: "radar",
         data: dataRadar,
-        options: {},
+        options: { maintainAspectRatio: false },
       };
 
       var chartBar = new Chart(
