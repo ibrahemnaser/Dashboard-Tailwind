@@ -9,6 +9,9 @@
       .show {
         left: 0 !important;
       }
+      .show-toaster {
+        right: 30px !important;
+      }
     </style>
     <!-- == Custom CSS == -->
     <link rel="stylesheet" href="dist/output.css" />
@@ -20,6 +23,13 @@
   <body class="selection:text-pink-800 dark:selection:text-pink-200">
     <main class="flex">
       <!-- == Sidebar Start == -->
+
+      <!-- == Start Toaster == -->
+      <div
+        id="toaster"
+        class="toaster font-semibold uppercase fixed top-6 -right-full bg-slate-300 text-slate-900 dark:bg-slate-900 dark:text-slate-300 py-2 px-4 shadow-lg border-r-4 border-r-slate-900 dark:border-r-slate-300 z-40 transition-all duration-1000 ease-[cubic-bezier(.31,1.59,.89,.87)]"
+      ></div>
+      <!-- == End Toaster == -->
 
       <!-- == Start Modal == -->
       <div
@@ -127,10 +137,10 @@
         </div>
         <div class="bottom-sidebar">
           <ul class="switcher">
-            <li class="moon hidden dark:block">
+            <li class="moon block dark:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6 text-pink-800 hidden dark:block dark:text-pink-200 dark:hover:text-pink-800 cursor-pointer"
+                class="h-6 w-6 text-pink-800 dark:block hover:text-pink-200 cursor-pointer"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -143,10 +153,10 @@
                 />
               </svg>
             </li>
-            <li class="sun block dark:hidden">
+            <li class="sun hidden dark:block">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6 text-pink-800 hover:text-pink-200 cursor-pointer"
+                class="h-6 w-6 text-pink-200 hidden dark:block hover:text-pink-800 cursor-pointer"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -180,7 +190,7 @@
           <p class="text-slate-400">1st January 2022 | 30th June 2022</p>
         </div>
         <div
-          class="dashboard-main bg-slate-300 py-16 px-4 rounded dark:bg-slate-900"
+          class="dashboard-main bg-slate-300 dark:bg-slate-900 py-16 px-4 rounded"
         >
           <div
             class="dash-stats grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4"
@@ -287,6 +297,7 @@
             label: "Check-In Users",
             backgroundColor: "hsl(252, 82.9%, 67.8%)",
             borderColor: "hsl(252, 82.9%, 67.8%)",
+            color: "#f00",
             data: [0, 10, 5, 2, 20, 30, 45],
           },
         ],
@@ -295,7 +306,22 @@
       const configLineChart = {
         type: "line",
         data,
-        options: { maintainAspectRatio: false },
+        options: {
+          maintainAspectRatio: false,
+          color: "rgb(148 163 184)",
+          scales: {
+            x: {
+              ticks: {
+                color: "rgb(148 163 184)",
+              },
+            },
+            y: {
+              ticks: {
+                color: "rgb(148 163 184)",
+              },
+            },
+          },
+        },
       };
 
       var chartLine = new Chart(
@@ -345,7 +371,30 @@
       const configRadarChart = {
         type: "radar",
         data: dataRadar,
-        options: { maintainAspectRatio: false },
+        options: {
+          maintainAspectRatio: false,
+          color: "rgb(148 163 184)",
+          scales: {
+            x: {
+              ticks: {
+                color: "rgb(148 163 184)",
+              },
+            },
+            y: {
+              ticks: {
+                color: "rgb(148 163 184)",
+              },
+            },
+            r: {
+              pointLabels: {
+                color: "rgb(148 163 184)",
+              },
+              ticks: {
+                color: "rgba(255,105,180)",
+              },
+            },
+          },
+        },
       };
 
       var chartBar = new Chart(
