@@ -1,7 +1,7 @@
 # Dashboard-Tailwind
 Basic dashboard styled with Tailwind Css and chartjs was used to display line and radar charts
 
-[Live Demo]:'https://ibrahemnaser.github.io/Dashboard-Tailwind/'
+[Live Demo](https://ibrahemnaser.github.io/Dashboard-Tailwind/)
 
 ## Technologies:
 1. HTML
